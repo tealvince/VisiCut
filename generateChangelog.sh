@@ -14,7 +14,7 @@ git log --decorate=full|{
 				exit
 			fi
 			echo ""
-			echo "=== Version $TAG ==="
+			echo "=== Verison $TAG ==="
 		fi
 		if echo $line|grep 'CHANGELOG:' > /dev/null
 		then

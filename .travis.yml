@@ -1,22 +1,22 @@
-language: minimal
-os: linux
-dist: xenial
+language: java
+jdk:
+  - openjdk7
+  - openjdk8
+  - oraclejdk8
 
-services:
-  - docker
+before_install:
+  - git submodule update --init --recursive
+  - sudo apt-get -qq update
+  - sudo apt-get install -y ant-optional
 
 script: 
   - "./test.sh"
-  - mkdir /tmp/out
-  - chmod ugo+rwx /tmp/out
-  - docker run -v /tmp/out:/app/output registry.gitlab.com/t-oster/visicutbuildservice
-  - echo "Created out files:"
-  - ls /tmp/out
-  - ls /tmp/out/*
+  - "ant test"
+  - "ant jar"
 
-deploy:
-  provider: releases
-  file: "/tmp/out/branch-master/**/*"
-  cleanup: false
-  on:
-    tags: true
+addons:
+  # Fix OpenJDK 7 buffer overflows when the host name is too long.
+  # https://docs.travis-ci.com/user/hostname
+  # https://github.com/travis-ci/travis-ci/issues/5227
+  hostname: dummy
+

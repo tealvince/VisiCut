@@ -1,7 +1,5 @@
 #!/bin/bash
 set -e # exit 1 if any command fails
-set -o pipefail
-cd "$(dirname "$0")"
 # set -x # uncomment for debugging
 if [ "$1" == "--nocompile" ]
 then
@@ -9,21 +7,17 @@ then
 else
    COMPILE=1
 fi
-echo "Determining Version (may be overridden with environment variable VERSION):"
-# VisiCutBuilder writes the setting in that file:
-VERSION=${VERSION:-$(cat ../src/main/resources/de/thomas_oster/visicut/gui/resources/VisicutApp.properties |grep Application.version)}
-# remove "Application.version =   " prefix which comes from the VisiCutApp.properties file
+echo "Determining Version:"
+VERSION=$(cat ../src/com/t_oster/visicut/gui/resources/VisicutApp.properties |grep Application.version)
 VERSION=${VERSION#*=}
 VERSION=${VERSION// /}
-# normally running ./distribute.sh doesn't write the above file. Then, fall back to what git describe tells us
-VERSION=${VERSION:-$(git describe --tags || echo unknown)+devel}
 echo "Version is: \"$VERSION\""
 if [ "$COMPILE" == 1 ]
 then
 	echo "Building jar..."
 	cd ..
-	make clean > /dev/null
-	VERSION="$VERSION" make > /dev/null || { echo "Compilation failed. Please run 'make' to see what failed."; exit 1; }
+	ant clean > /dev/null
+	make > /dev/null || exit 1
 	cd distribute
 fi
 
@@ -32,7 +26,7 @@ rm -rf visicut
 
 echo "Copying content..."
 mkdir visicut
-cp -r ../target/visicut*full.jar visicut/Visicut.jar
+cp -r ../dist/* visicut/
 cp -r files/* visicut/
 cp ../README.md visicut/README
 cp ../COPYING.LESSER visicut/
@@ -45,54 +39,21 @@ cp ../tools/inkscape_extension/*.inx visicut/inkscape_extension/
 mkdir -p visicut/illustrator_script
 cp ../tools/illustrator_script/*.scpt visicut/illustrator_script/
 
-# check_sha256 <filename> <hash>
-# -> returns 0 if file exists and its hash is correct, 1 otherwise.
-function check_sha256() {
-    test -e "$1" || return 1
-    sha256sum "$1" | grep -q "$2" || { echo "SHA256 hash of $1 does not match. Expected: $2, Got:"; sha256sum $1; return 1; }
-    return 0
-}
-
-# URL and hash of the OpenJRE ZIP file for Windows.
-# You can override this with environment variables.
-# The distribution by Oracle has evil license terms, so we use the OpenJDK JRE from https://adoptopenjdk.net/
-WINDOWS_JRE_URL=${WINDOWS_JRE_URL:-"https://github.com/AdoptOpenJDK/openjdk11-binaries/releases/download/jdk-11.0.4%2B11/OpenJDK11U-jre_x64_windows_hotspot_11.0.4_11.zip"}
-WINDOWS_JRE_SHA256=${WINDOWS_JRE_SHA256:-"be88c679fd24194bee71237f92f7a2a71c88f71a853a56a7c05742b0e158c1be"}
-
 if which makensis > /dev/null
 then
-	mkdir -p cache
-	echo "Downloading OpenJRE for Windows (may be overridden with WINDOWS_JRE_URL and WINDOWS_JRE_SHA256)"
-	# download JRE if not existing or wrong file contents
-    check_sha256 cache/jre.zip $WINDOWS_JRE_SHA256 || wget "$WINDOWS_JRE_URL" -O cache/jre.zip
-    # check if downloaded JRE is correct (to exclude incomplete download)
-    check_sha256 cache/jre.zip $WINDOWS_JRE_SHA256 || exit 1
-    echo "Building Windows launcher and installer"
+	echo "Building Windows launcher and installer"
 	# Copy files to wintmp/
 	rm -rf wintmp
 	mkdir wintmp
 	cp -r windows/* wintmp/
 	[ -d wintmp/stream ] || mkdir wintmp/stream
 	cp -r visicut/* wintmp/stream/
-	cp ../src/main/resources/de/thomas_oster/visicut/gui/resources/splash*.png wintmp/stream
 	cp ../tools/inkscape_extension/* wintmp/
 
 	# build setup.exe installer
 	# and VisiCut.exe launcher executable
 	cat windows/installer.nsi|sed s#VISICUTVERSION#"$VERSION"#g > wintmp/installer.nsi
 	pushd wintmp > /dev/null
-	# Unpack JRE. We assume that this creates a subfolder with "jre" in its name
-	unzip -q ../cache/jre.zip
-    mv *jre*/ stream/jre/
-	test -e stream/jre/bin/java.exe || { echo "Cannot find java.exe in JRE ZIP file"; exit 1; }
-	test -e stream/jre/legal/java.base/LICENSE || { echo "Cannot find license information in JRE ZIP file"; exit 1; }
-	# Build license text for Windows installer
-    {
-        cat ../../LICENSE
-        echo "Java Runtime for Windows:"
-        echo -e "- OpenJRE (GPLv2 with Classpath exception). License details follow:"
-        find stream/jre/legal/ -type f -print -exec cat '{}' ';'
-    }  > stream/license-with-jre.txt
 	makensis launcher.nsi > /dev/null || exit 1 # build VisiCut.exe
 	cp VisiCut.exe ../visicut/ # copy VisiCut.exe so that it is included in the platform independent ZIP
 	mv VisiCut.exe ./stream/
@@ -116,11 +77,6 @@ echo ""
 echo "****************************************************************"
 echo "Mac OS Version: Building the Mac OS Version should work on all platforms"
 echo "Build Mac OS Version (Y/n)?"
-# URL and hash of the OpenJRE ZIP file for OSX.
-# You can override this with environment variables.
-# The distribution by Oracle has evil license terms, so we use the OpenJDK JRE from https://adoptopenjdk.net/
-OSX_JRE_URL=${OSX_JRE_URL:-"https://github.com/AdoptOpenJDK/openjdk11-binaries/releases/download/jdk-11.0.5%2B10/OpenJDK11U-jre_x64_mac_hotspot_11.0.5_10.tar.gz"}
-OSX_JRE_SHA256=${OSX_JRE_SHA256:-"dfd212023321ebb41bce8cced15b4668001e86ecff6bffdd4f2591ccaae41566"}
 read answer || true
 if [ "$answer" != "n" ]
 then
@@ -129,26 +85,15 @@ then
   cp -r "mac/VisiCut.app" .
   mkdir -p "VisiCut.app/Contents/Resources/Java"
   cp -r visicut/* "VisiCut.app/Contents/Resources/Java/"
-  mkdir "VisiCut.app/Contents/Java"
-  mv "VisiCut.app/Contents/Resources/Java/Visicut.jar" "VisiCut.app/Contents/Java/"
-  cp ../src/main/resources/de/thomas_oster/visicut/gui/resources/splash*.png "VisiCut.app/Contents/Resources/Java"
   echo "Updating Bundle Info"
   cp "VisiCut.app/Contents/Info.plist" .
   cat Info.plist|sed s#VISICUTVERSION#"$VERSION"#g > VisiCut.app/Contents/Info.plist
   rm Info.plist
-  mkdir -p mac/jre
-  echo "Downloading OpenJRE for OSX (may be overridden with OSX_JRE_URL and OSX_JRE_SHA256)"
-  # download JRE if not existing or wrong file contents
-  check_sha256 mac/jre/jre.tar.gz $OSX_JRE_SHA256 || wget "$OSX_JRE_URL" -O mac/jre/jre.tar.gz
-  # check if downloaded JRE is correct (to exclude incomplete download)
-  check_sha256 mac/jre/jre.tar.gz $OSX_JRE_SHA256 || exit 1
-  echo "Inserting JRE into the app bundle..:"
-  mkdir -p VisiCut.app/Contents/Plugins
-  tar -xf mac/jre/jre.tar.gz -C VisiCut.app/Contents/Plugins
-  mv VisiCut.app/Contents/Plugins/jdk-11.0.5+10-jre VisiCut.app/Contents/Plugins/JRE
   echo "Compressing Mac OS Bundle"
   rm -rf VisiCutMac-$VERSION.zip
   zip -r VisiCutMac-$VERSION.zip VisiCut.app > /dev/null || exit 1
+  echo "Cleaning up..."
+  rm -rf VisiCut.app
 fi
 
 echo "Dir:$(pwd)"

@@ -1,7 +1,6 @@
 /build/
 /nbproject/private/
 /dist/
-/distribute/cache/
 /distribute/VisiCut*.zip
 /distribute/*.deb
 /distribute/*.exe
@@ -13,19 +12,10 @@
 /distribute/visicut/
 /distribute/VisiCut.app/
 /settings/
-/src/main/resources/de/thomas_oster/visicut/gui/resources/splash.png
-/src/main/resources/de/thomas_oster/visicut/gui/resources/splash@*.png
 /*-pak
 # Temporary files:
-/distribute/wintmp/
 *~
-*.orig
 
 # Maven stuff:
 /lib/nbproject/private/
 /lib/build/
-/target/
-
-# AppImage builds
-.appimagecraft-build*/
-*.AppImage
