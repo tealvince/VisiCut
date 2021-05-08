@@ -172,7 +172,7 @@ public class MainView extends javax.swing.JFrame
     @Override
     public void showSuccessMessage(String text)
     {
-      MainView.this.warningPanel.addMessage(new Message("Success", text, Message.Type.SUCCESS, null, 10000));
+      MainView.this.warningPanel.addMessage(new Message("Success", text, Message.Type.SUCCESS, null));
     }
 
     @Override
