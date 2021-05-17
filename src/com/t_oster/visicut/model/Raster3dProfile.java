@@ -73,6 +73,7 @@ public class Raster3dProfile extends LaserProfile
     this.invertColors = invertColors;
   }
   protected int colorShift = 0;
+  protected int contrastBoost = 0;
 
   /**
    * Get the value of colorShift
@@ -92,6 +93,26 @@ public class Raster3dProfile extends LaserProfile
   public void setColorShift(int colorShift)
   {
     this.colorShift = colorShift;
+  }
+
+  /**
+   * Get the value of contrastBoost
+   *
+   * @return the value of contrastBoost
+   */
+  public int getContrastBoost()
+  {
+    return contrastBoost;
+  }
+
+  /**
+   * Set the value of contrastBoost
+   *
+   * @param contrastBoost new value of contrastBoost
+   */
+  public void setContrastBoost(int contrastBoost)
+  {
+    this.contrastBoost = contrastBoost;
   }
 
   public BufferedImage getRenderedPreview(GraphicSet objects, MaterialProfile material, AffineTransform mm2px, ProgressListener pl)
@@ -119,6 +140,7 @@ public class Raster3dProfile extends LaserProfile
       }
       BufferedImageAdapter ad = new BufferedImageAdapter(scaledImg, invertColors);
       ad.setColorShift(this.getColorShift());
+      ad.setContrastBoost(this.getContrastBoost());
       for (int y = 0; y < ad.getHeight(); y++)
       {
         for (int x = 0; x < ad.getWidth(); x++)
@@ -211,6 +233,7 @@ public class Raster3dProfile extends LaserProfile
         }
         BufferedImageAdapter ad = new BufferedImageAdapter(scaledImg, invertColors);
         ad.setColorShift(this.getColorShift());
+        ad.setContrastBoost(this.getContrastBoost());
         for (LaserProperty prop : laserProperties)
         {
           Raster3dPart part = new Raster3dPart(ad, prop, new Point((int) bb.getX(), (int) bb.getY()), getDPI());
@@ -225,6 +248,7 @@ public class Raster3dProfile extends LaserProfile
   {
     Raster3dProfile rp = new Raster3dProfile();
     rp.colorShift = this.colorShift;
+    rp.contrastBoost = this.contrastBoost;
     rp.description = this.description;
     rp.invertColors = this.invertColors;
     rp.name = this.name;
@@ -236,7 +260,7 @@ public class Raster3dProfile extends LaserProfile
   @Override
   public int hashCode()
   {
-    return super.hashCodeBase() * 31 + (invertColors?1:0) *17 + colorShift;
+    return super.hashCodeBase() * 31 + (invertColors?1:0) *17 + colorShift + contrastBoost;
   }
 
   @Override
@@ -256,6 +280,10 @@ public class Raster3dProfile extends LaserProfile
       return false;
     }
     if (this.colorShift != other.colorShift)
+    {
+      return false;
+    }
+    if (this.contrastBoost != other.contrastBoost)
     {
       return false;
     }

@@ -76,6 +76,7 @@ public class RasterProfile extends LaserProfile
     this.invertColors = invertColors;
   }
   protected int colorShift = 0;
+  protected int contrastBoost = 0;
 
   /**
    * Get the value of colorShift
@@ -96,6 +97,27 @@ public class RasterProfile extends LaserProfile
   {
     this.colorShift = colorShift;
   }
+
+  /**
+   * Get the value of contrastBoost
+   *
+   * @return the value of contrastBoost
+   */
+  public int getContrastBoost()
+  {
+    return contrastBoost;
+  }
+
+  /**
+   * Set the value of contrastBoost
+   *
+   * @param contrastBoost new value of contrastBoost
+   */
+  public void setContrastBoost(int contrastBoost)
+  {
+    this.contrastBoost = contrastBoost;
+  }
+
   protected DitheringAlgorithm ditherAlgorithm = new FloydSteinberg();
 
   /**
@@ -171,6 +193,7 @@ public class RasterProfile extends LaserProfile
         }
       };
       ad.setColorShift(this.getColorShift());
+      ad.setContrastBoost(this.getContrastBoost());
       DitheringAlgorithm alg = this.getDitherAlgorithm();
       if (pl != null)
       {
@@ -224,6 +247,7 @@ public class RasterProfile extends LaserProfile
         //Then dither this image
         BufferedImageAdapter ad = new BufferedImageAdapter(scaledImg, invertColors);
         ad.setColorShift(this.getColorShift());
+        ad.setContrastBoost(this.getContrastBoost());
         BlackWhiteRaster bw = new BlackWhiteRaster(ad, this.getDitherAlgorithm());
         for (LaserProperty prop : laserProperties)
         {
@@ -239,6 +263,7 @@ public class RasterProfile extends LaserProfile
   {
     RasterProfile rp = new RasterProfile();
     rp.colorShift = this.colorShift;
+    rp.contrastBoost = this.contrastBoost;
     rp.description = this.description;
     rp.ditherAlgorithm = this.ditherAlgorithm;
     rp.invertColors = this.invertColors;
@@ -250,7 +275,7 @@ public class RasterProfile extends LaserProfile
   
   public int hashCode()
   {
-    return super.hashCodeBase() * 31 + (invertColors?1:0) *17 + colorShift;
+    return super.hashCodeBase() * 31 + (invertColors?1:0) *17 + colorShift + contrastBoost;
   }
   
   public boolean equals(Object obj)
@@ -269,6 +294,10 @@ public class RasterProfile extends LaserProfile
       return false;
     }
     if (this.colorShift != other.colorShift)
+    {
+      return false;
+    }
+    if (this.contrastBoost != other.contrastBoost)
     {
       return false;
     }

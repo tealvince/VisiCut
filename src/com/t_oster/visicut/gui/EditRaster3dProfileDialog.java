@@ -126,7 +126,9 @@ public class EditRaster3dProfileDialog extends javax.swing.JDialog
     jCheckBox1 = new javax.swing.JCheckBox();
     selectThumbnailButton1 = new com.t_oster.uicomponents.SelectThumbnailButton();
     jSlider1 = new javax.swing.JSlider();
+    jSlider2 = new javax.swing.JSlider();
     jLabel6 = new javax.swing.JLabel();
+    jLabel7 = new javax.swing.JLabel();
     jLabel1 = new javax.swing.JLabel();
     cbResolution = new javax.swing.JComboBox();
     jLabel2 = new javax.swing.JLabel();
@@ -189,11 +191,20 @@ public class EditRaster3dProfileDialog extends javax.swing.JDialog
     jSlider1.setToolTipText(resourceMap.getString("jSlider1.toolTipText")); // NOI18N
     jSlider1.setName("jSlider1"); // NOI18N
 
+    jSlider2.setMaximum(255);
+    jSlider2.setMinimum(0);
+    jSlider2.setToolTipText(resourceMap.getString("jSlider2.toolTipText")); // NOI18N
+    jSlider2.setName("jSlider2"); // NOI18N
+
     binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, this, org.jdesktop.beansbinding.ELProperty.create("${currentRasterProfile.colorShift}"), jSlider1, org.jdesktop.beansbinding.BeanProperty.create("value"), "colorshift");
+    bindingGroup.addBinding(binding);
+    binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, this, org.jdesktop.beansbinding.ELProperty.create("${currentRasterProfile.contrastBoost}"), jSlider2, org.jdesktop.beansbinding.BeanProperty.create("value"), "contrastboost");
     bindingGroup.addBinding(binding);
 
     jLabel6.setText(resourceMap.getString("profile.greyscaleShift")); // NOI18N
     jLabel6.setName("jLabel6"); // NOI18N
+    jLabel7.setText(resourceMap.getString("profile.contrastBoost")); // NOI18N
+    jLabel7.setName("jLabel7"); // NOI18N
 
     jLabel1.setText(resourceMap.getString("jLabel1.text")); // NOI18N
     jLabel1.setName("jLabel1"); // NOI18N
@@ -228,6 +239,7 @@ public class EditRaster3dProfileDialog extends javax.swing.JDialog
               .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                   .addComponent(jLabel6)
+                  .addComponent(jLabel7)
                   .addComponent(lbDescription)
                   .addComponent(selectThumbnailButton1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                   .addComponent(jLabel1)
@@ -236,6 +248,7 @@ public class EditRaster3dProfileDialog extends javax.swing.JDialog
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                   .addComponent(jCheckBox1)
                   .addComponent(jSlider1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                  .addComponent(jSlider2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                   .addComponent(cbResolution, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                   .addComponent(tfDescription, javax.swing.GroupLayout.DEFAULT_SIZE, 305, Short.MAX_VALUE)
                   .addComponent(tfName))))
@@ -263,6 +276,9 @@ public class EditRaster3dProfileDialog extends javax.swing.JDialog
         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
           .addComponent(jLabel6)
           .addComponent(jSlider1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
+          .addComponent(jLabel7)
+          .addComponent(jSlider2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
           .addComponent(jLabel2)
@@ -299,7 +315,9 @@ public class EditRaster3dProfileDialog extends javax.swing.JDialog
   private javax.swing.JLabel jLabel1;
   private javax.swing.JLabel jLabel2;
   private javax.swing.JLabel jLabel6;
+  private javax.swing.JLabel jLabel7;
   private javax.swing.JSlider jSlider1;
+  private javax.swing.JSlider jSlider2;
   private javax.swing.JLabel lbDescription;
   private javax.swing.JLabel lbName;
   private com.t_oster.uicomponents.SelectThumbnailButton selectThumbnailButton1;

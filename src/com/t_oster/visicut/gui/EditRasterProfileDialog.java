@@ -151,7 +151,9 @@ public class EditRasterProfileDialog extends javax.swing.JDialog
         selectThumbnailButton1 = new com.t_oster.uicomponents.SelectThumbnailButton();
         cbInvertColors = new javax.swing.JCheckBox();
         jSlider1 = new javax.swing.JSlider();
+        jSlider2 = new javax.swing.JSlider();
         lbGreyscaleShift = new javax.swing.JLabel();
+        lbContrastBoost = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new BetterJTable();
         jLabel1 = new javax.swing.JLabel();
@@ -227,11 +229,20 @@ public class EditRasterProfileDialog extends javax.swing.JDialog
         jSlider1.setToolTipText(resourceMap.getString("jSlider1.toolTipText")); // NOI18N
         jSlider1.setName("jSlider1"); // NOI18N
 
+        jSlider2.setMaximum(255);
+        jSlider2.setMinimum(0);
+        jSlider2.setToolTipText(resourceMap.getString("jSlider2.toolTipText")); // NOI18N
+        jSlider2.setName("jSlider2"); // NOI18N
+
         binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, this, org.jdesktop.beansbinding.ELProperty.create("${currentRasterProfile.colorShift}"), jSlider1, org.jdesktop.beansbinding.BeanProperty.create("value"), "colorshift");
+        bindingGroup.addBinding(binding);
+        binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, this, org.jdesktop.beansbinding.ELProperty.create("${currentRasterProfile.contrastBoost}"), jSlider2, org.jdesktop.beansbinding.BeanProperty.create("value"), "contrastboost");
         bindingGroup.addBinding(binding);
 
         lbGreyscaleShift.setText(resourceMap.getString("profile.greyscaleShift")); // NOI18N
         lbGreyscaleShift.setName("lbGreyscaleShift"); // NOI18N
+        lbContrastBoost.setText(resourceMap.getString("profile.contrastBoost")); // NOI18N
+        lbContrastBoost.setName("lbContrastBoost"); // NOI18N
 
         jScrollPane1.setName("jScrollPane1"); // NOI18N
 
@@ -272,6 +283,7 @@ public class EditRasterProfileDialog extends javax.swing.JDialog
                     .addComponent(lbDescription)
                     .addComponent(selectThumbnailButton1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(lbGreyscaleShift)
+                    .addComponent(lbContrastBoost)
                     .addComponent(jLabel4)
                     .addComponent(jLabel1)
                     .addComponent(jLabel2))
@@ -283,6 +295,7 @@ public class EditRasterProfileDialog extends javax.swing.JDialog
                         .addGap(18, 18, 18)
                         .addComponent(jButton3))
                     .addComponent(jSlider1, javax.swing.GroupLayout.DEFAULT_SIZE, 279, Short.MAX_VALUE)
+                    .addComponent(jSlider2, javax.swing.GroupLayout.DEFAULT_SIZE, 279, Short.MAX_VALUE)
                     .addComponent(tfDescription)
                     .addComponent(tfName)
                     .addComponent(jComboBox1, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -320,6 +333,9 @@ public class EditRasterProfileDialog extends javax.swing.JDialog
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
                     .addComponent(lbGreyscaleShift)
                     .addComponent(jSlider1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
+                    .addComponent(lbContrastBoost)
+                    .addComponent(jSlider2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
                     .addComponent(jLabel2)
@@ -374,9 +390,11 @@ private void jComboBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FI
     private javax.swing.JLabel jLabel4;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JSlider jSlider1;
+    private javax.swing.JSlider jSlider2;
     private javax.swing.JTable jTable1;
     private javax.swing.JLabel lbDescription;
     private javax.swing.JLabel lbGreyscaleShift;
+    private javax.swing.JLabel lbContrastBoost;
     private javax.swing.JLabel lbName;
     private com.t_oster.uicomponents.SelectThumbnailButton selectThumbnailButton1;
     private javax.swing.JTextField tfDescription;
