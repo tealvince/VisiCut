@@ -49,11 +49,15 @@ public class PlatformIcon
   //public static final String NEW = "new";
   //public static final String NEXT = "next";
   public static final String NO_IMAGE = "no-image";
+  public static final String LINE = "line";
+  public static final String OVAL = "oval";
   public static final String PROJECTOR = "projector";
   //public static final String PREV = "prev";
+  public static final String RECT = "rect";
   public static final String REMOVE = "remove";
   public static final String REMOVE_FILE = "remove-file";
   public static final String SAVE = "save";
+  public static final String TEXT = "text";
   public static final String UNDO = "undo";
   public static final String UP = "up";
   //public static final String ZOOM_ACTUAL_EQUAL = "zoom-actual-equal";
@@ -80,6 +84,10 @@ public class PlatformIcon
     gtkIconNames.put(REMOVE_FILE, "gtk-delete");
     gtkIconNames.put(LOAD, "gtk-open");
     gtkIconNames.put(UNDO, "gtk-undo");
+    gtkIconNames.put(LINE, "gtk-line");
+    gtkIconNames.put(RECT, "gtk-rect");
+    gtkIconNames.put(OVAL, "gtk-oval");
+    gtkIconNames.put(TEXT, "gtk-text");
   }
   
   public static Icon get(String type)

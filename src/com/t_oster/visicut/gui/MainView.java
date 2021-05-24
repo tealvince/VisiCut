@@ -477,7 +477,7 @@ public class MainView extends javax.swing.JFrame
 
         public void actionPerformed(ActionEvent ae)
         {
-          dialog.openInFilebrowser(new File(Helper.getBasePath(), "examples"));
+          dialog.openInFilebrowser(new File(Helper.getVisiCutFolder(), "examples"));
           //TODO refresh menu on next click (menu and action-listener don't work)
         }
       });
@@ -706,6 +706,10 @@ public class MainView extends javax.swing.JFrame
     jSeparator1 = new javax.swing.JSeparator();
     btRemoveObject = new javax.swing.JButton();
     btAddObject = new javax.swing.JButton();
+    btAddLineObject = new javax.swing.JButton();
+    btAddRectObject = new javax.swing.JButton();
+    btAddOvalObject = new javax.swing.JButton();
+    btAddTextObject = new javax.swing.JButton();
     warningPanel = new com.t_oster.uicomponents.warnings.WarningPanel();
     jPanel1 = new javax.swing.JPanel();
     jButton2 = new javax.swing.JButton();
@@ -969,6 +973,41 @@ public class MainView extends javax.swing.JFrame
         btAddObjectActionPerformed(evt);
       }
     });
+    btAddLineObject.setIcon(PlatformIcon.get(PlatformIcon.LINE));
+    btAddLineObject.addActionListener(new java.awt.event.ActionListener()
+    {
+      public void actionPerformed(java.awt.event.ActionEvent evt)
+      {
+        MainView.this.loadFile(new File(new File(new File(Helper.getVisiCutFolder(), "examples"), "Parametric"), "line.parametric.svg"), false);
+      }
+    });
+	 
+    btAddRectObject.setIcon(PlatformIcon.get(PlatformIcon.RECT));
+    btAddRectObject.addActionListener(new java.awt.event.ActionListener()
+    {
+      public void actionPerformed(java.awt.event.ActionEvent evt)
+      {
+        MainView.this.loadFile(new File(new File(new File(Helper.getVisiCutFolder(), "examples"), "Parametric"), "rect.parametric.svg"), false);
+      }
+    });
+
+    btAddOvalObject.setIcon(PlatformIcon.get(PlatformIcon.OVAL));
+    btAddOvalObject.addActionListener(new java.awt.event.ActionListener()
+    {
+      public void actionPerformed(java.awt.event.ActionEvent evt)
+      {
+        MainView.this.loadFile(new File(new File(new File(Helper.getVisiCutFolder(), "examples"), "Parametric"), "oval.parametric.svg"), false);
+      }
+    });
+
+    btAddTextObject.setIcon(PlatformIcon.get(PlatformIcon.TEXT));
+    btAddTextObject.addActionListener(new java.awt.event.ActionListener()
+    {
+      public void actionPerformed(java.awt.event.ActionEvent evt)
+      {
+        MainView.this.loadFile(new File(new File(new File(Helper.getVisiCutFolder(), "examples"), "Parametric"), "text.parametric.svg"), false);
+      }
+    });
 
     javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
     jPanel2.setLayout(jPanel2Layout);
@@ -998,7 +1037,16 @@ public class MainView extends javax.swing.JFrame
               .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel2Layout.createSequentialGroup()
                 .addComponent(jLabel2)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(objectComboBox, 0, 416, Short.MAX_VALUE)
+                .addComponent(objectComboBox, 0, 416-31*4, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(btAddLineObject, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(btAddRectObject, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(btAddOvalObject, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(btAddTextObject, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btAddObject, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -1055,6 +1103,10 @@ public class MainView extends javax.swing.JFrame
             .addComponent(objectComboBox)
             .addComponent(jLabel2))
           .addComponent(btRemoveObject, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
+          .addComponent(btAddLineObject, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
+          .addComponent(btAddRectObject, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
+          .addComponent(btAddOvalObject, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
+          .addComponent(btAddTextObject, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
           .addComponent(btAddObject, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE))
         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
         .addComponent(mappingTabbedPane)
@@ -1808,7 +1860,7 @@ public class MainView extends javax.swing.JFrame
     catch (Exception e)
     {
       this.progressBar.setIndeterminate(false);
-      dialog.showErrorMessage(e, bundle.getString("ERROR WHILE OPENING '") + file.getName() + "'");
+      dialog.showErrorMessage(e, bundle.getString("ERROR WHILE OPENING '") + file.getPath() + "'");
     }
   }
 
@@ -3498,6 +3550,10 @@ private void projectorActiveMenuItemActionPerformed(java.awt.event.ActionEvent e
   private javax.swing.JButton btAddMaterial;
   private javax.swing.JButton btAddMaterialThickness;
   private javax.swing.JButton btAddObject;
+  private javax.swing.JButton btAddLineObject;
+  private javax.swing.JButton btAddRectObject;
+  private javax.swing.JButton btAddOvalObject;
+  private javax.swing.JButton btAddTextObject;
   private javax.swing.JButton btFacebook;
   private javax.swing.JButton btFitScreen;
   private javax.swing.JButton btQRWebcamScan;
@@ -3843,6 +3899,10 @@ private void projectorActiveMenuItemActionPerformed(java.awt.event.ActionEvent e
     recentFilesMenu.setEnabled(!disable);
     jmExamples.setEnabled(!disable);
     btAddObject.setEnabled(!disable);
+    btAddLineObject.setEnabled(!disable);
+    btAddRectObject.setEnabled(!disable);
+    btAddOvalObject.setEnabled(!disable);
+    btAddTextObject.setEnabled(!disable);
     btRemoveObject.setEnabled(!disable);
     objectComboBox.setEnabled(!disable);
 

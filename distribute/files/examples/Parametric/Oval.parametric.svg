@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   xmlns:th="http://www.thymeleaf.org"
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   width="210mm"
+   height="297mm"
+   viewBox="0 0 744.09448819 1052.3622047"
+   id="svg2"
+   version="1.1"
+   inkscape:version="0.91 r13725"
+   sodipodi:docname="TEMP.SVG.svg">
+  <defs
+     id="defs1">
+    <ref
+       param="CX"
+       label="Center X (mm)"
+       default="100"
+       id="x" />
+    <ref
+       param="CY"
+       label="Center Y (mm)"
+       default="100"
+       id="y" />
+    <ref
+       param="RX"
+       label="Radius X (mm)"
+       default="50"
+       id="rx" />
+    <ref
+       param="RY"
+       label="Radius Y (mm)"
+       default="50"
+       id="ry" />
+    <ref
+       param="SW"
+       label="Stroke Width"
+       default="5"
+       id="sw" />
+    <ref
+       param="COLOR"
+		 label="Stroke Color"
+       type="String(none,#000000,#222222,#444444,#666666,#888888,#aaaaaa,#cccccc,#ffffff)"
+		 default="#000000"
+       id="color" />
+    <ref
+       param="FILL"
+		 label="Fill Color"
+       type="String(none,#000000,#222222,#444444,#666666,#888888,#aaaaaa,#cccccc,#ffffff)"
+		 default="none"
+       id="fill" />
+  </defs>
+    <ellipse
+	 	 th:attr="stroke=${COLOR},fill=${FILL},stroke-width=${SW},cx=${CX}*3.543307,cy=${CY}*3.543307,rx=${RX}*3.543307,ry=${RY}*3.543307"
+       id="ellipse"
+       cx="100"
+       cy="100"
+       rx="80"
+       ry="50" />
+</svg>

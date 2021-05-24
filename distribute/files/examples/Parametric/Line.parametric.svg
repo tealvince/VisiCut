@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   xmlns:th="http://www.thymeleaf.org"
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   width="210mm"
+   height="297mm"
+   viewBox="0 0 744.09448819 1052.3622047"
+   id="svg2"
+   version="1.1"
+   inkscape:version="0.91 r13725"
+   sodipodi:docname="line-horizontal.svg">
+  <defs id="defs">
+    <ref
+       param="TYPE"
+       label="Type"
+		 type="String(Freeform,Flipped,Vertical,Horizontal)"
+       default="Freeform"
+       id="type" />
+    <ref
+       param="X1"
+       label="X1 (mm)"
+       default="10"
+       id="x1" />
+    <ref
+       param="Y1"
+       label="Y1 (mm)"
+       default="10"
+       id="y1" />
+    <ref
+       param="X2"
+       label="X2 (mm)"
+       default="200"
+       id="x2" />
+    <ref
+       param="Y2"
+       label="Y2 (mm)"
+       default="100"
+       id="y2" />
+    <ref
+       param="SW"
+       label="Stroke Width"
+       default="5"
+       id="sw" />
+    <ref
+       param="COLOR"
+		 label="Stroke Color"
+       type="String(none,#000000,#222222,#444444,#666666,#888888,#aaaaaa,#cccccc,#ffffff)"
+		 default="#000000"
+       id="color" />
+  </defs>
+  <sodipodi:namedview
+     id="base"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0" />
+  <g>
+    <path
+	 	 th:attr="stroke-width=${SW},stroke=${COLOR},d='m ' + ${X1}*3.543307 + ',' + ${Y1}*3.543307 + ' L '+ ${X2}*3.543307 + ',' + ${Y2}*3.543307"
+		 th:if="${TYPE}=='Freeform'"
+       style="fill:none"
+       id="path"
+		  />
+    <path
+	 	 th:attr="stroke-width=${SW},stroke=${COLOR},d='m ' + ${X2}*3.543307 + ',' + ${Y1}*3.543307 + ' L '+ ${X1}*3.543307 + ',' + ${Y2}*3.543307"
+		 th:if="${TYPE}=='Flipped'"
+       style="fill:none"
+       id="path"
+		  />
+    <path
+	 	 th:attr="stroke-width=${SW},stroke=${COLOR},d='m ' + ${X1}*3.543307 + ',' + ${Y1}*3.543307 + ' V '+ ${Y2}*3.543307"
+		 th:if="${TYPE}=='Vertical'"
+       style="fill:none"
+       id="path"
+		  />
+    <path
+	 	 th:attr="stroke-width=${SW},stroke=${COLOR},d='m ' + ${X1}*3.543307 + ',' + ${Y1}*3.543307 + ' H '+ ${X2}*3.543307"
+		 th:if="${TYPE}=='Horizontal'"
+       style="fill:none"
+       id="path"
+		  />
+  </g>
+</svg>
