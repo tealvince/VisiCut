@@ -43,8 +43,12 @@ public class PlatformIcon
   public static final String ADD = "add";
   public static final String ADD_FILE = "add-file";
   public static final String CAMERA = "camera";
+  public static final String COPY = "copy";
+  public static final String DELETE = "delete";
   public static final String DOWN = "down";
   public static final String EDIT = "edit";
+  public static final String FLIPX = "flipx";
+  public static final String FLIPY = "flipy";
   public static final String LOAD = "load";
   //public static final String NEW = "new";
   //public static final String NEXT = "next";
@@ -56,6 +60,7 @@ public class PlatformIcon
   public static final String RECT = "rect";
   public static final String REMOVE = "remove";
   public static final String REMOVE_FILE = "remove-file";
+  public static final String ROTATE = "rotate";
   public static final String SAVE = "save";
   public static final String TEXT = "text";
   public static final String UNDO = "undo";
@@ -88,6 +93,11 @@ public class PlatformIcon
     gtkIconNames.put(RECT, "gtk-rect");
     gtkIconNames.put(OVAL, "gtk-oval");
     gtkIconNames.put(TEXT, "gtk-text");
+    gtkIconNames.put(FLIPX, "gtk-flipx");
+    gtkIconNames.put(FLIPY, "gtk-flipy");
+    gtkIconNames.put(ROTATE, "gtk-rotate");
+    gtkIconNames.put(COPY, "gtk-copy");
+    gtkIconNames.put(DELETE, "gtk-delete");
   }
   
   public static Icon get(String type)

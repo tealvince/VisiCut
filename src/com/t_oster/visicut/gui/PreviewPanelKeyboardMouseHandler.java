@@ -309,7 +309,7 @@ public class PreviewPanelKeyboardMouseHandler extends EditRectangleController im
     backgroundMenu.add(moveToPositionMenuItem);
   }
 
-  private void flip(boolean horizontal)
+  public void flip(boolean horizontal)
   {
     Rectangle2D bb = getSelectedPart().getBoundingBox();
     double mx = bb.getX()+bb.getWidth()/2;
@@ -325,7 +325,7 @@ public class PreviewPanelKeyboardMouseHandler extends EditRectangleController im
     previewPanel.repaint();
   }
 
-  private void rotateBy(double angle)
+  public void rotateBy(double angle)
   {
     Rectangle2D bb = getSelectedPart().getBoundingBox();
     double mx = bb.getX()+bb.getWidth()/2;
@@ -786,6 +786,7 @@ public class PreviewPanelKeyboardMouseHandler extends EditRectangleController im
       Point2D.Double diff = new Point2D.Double(evt.getPoint().x - lastMousePosition.x, evt.getPoint().y - lastMousePosition.y);
       try
       {
+        this.previewPanel.requestFocus();  // request focus so we respond to key events
         switch (currentAction)
         {
           case selectingScreenshot:
@@ -832,34 +833,62 @@ public class PreviewPanelKeyboardMouseHandler extends EditRectangleController im
             {
               case BOTTOM_RIGHT:
               {
-                double offset = Math.abs(diff.x) > Math.abs(diff.y) ? diff.x : diff.y;
-                getEditRect().height += (offset * getEditRect().height / getEditRect().width);
-                getEditRect().width += offset;
+                if (!shiftKeyDown) // maintain aspect ratio if shift is down
+                {
+                  getEditRect().height += diff.y;
+                  getEditRect().width += diff.x;
+                } else {
+                  double offset = Math.abs(diff.x) > Math.abs(diff.y) ? diff.x : diff.y;
+                  getEditRect().height += (offset * getEditRect().height / getEditRect().width);
+                  getEditRect().width += offset;
+                }
                 break;
               }
               case BOTTOM_LEFT:
               {
-                double offset = Math.abs(diff.x) > Math.abs(diff.y) ? diff.x : -diff.y;
-                getEditRect().height -= (offset * getEditRect().height / getEditRect().width);
-                getEditRect().x += offset;
-                getEditRect().width -= offset;
+                if (!shiftKeyDown) // maintain aspect ratio if shift is down
+                {
+                  getEditRect().height += diff.y;
+                  getEditRect().x += diff.x;
+                  getEditRect().width -= diff.x;					 
+                } else {
+                  double offset = Math.abs(diff.x) > Math.abs(diff.y) ? diff.x : -diff.y;
+                  getEditRect().height -= (offset * getEditRect().height / getEditRect().width);
+                  getEditRect().x += offset;
+                  getEditRect().width -= offset;
+                }
                 break;
               }
               case TOP_RIGHT:
               {
-                double offset = Math.abs(diff.x) > Math.abs(diff.y) ? diff.x : -diff.y;
-                getEditRect().y -= (offset * getEditRect().height / getEditRect().width);
-                getEditRect().height += (offset * getEditRect().height / getEditRect().width);
-                getEditRect().width += offset;
+                if (!shiftKeyDown) // maintain aspect ratio if shift is down
+                {
+                  getEditRect().y += diff.y;
+                  getEditRect().height -= diff.y;
+                  getEditRect().width += diff.x;					 
+                } else {
+                  double offset = Math.abs(diff.x) > Math.abs(diff.y) ? diff.x : -diff.y;
+                  getEditRect().y -= (offset * getEditRect().height / getEditRect().width);
+                  getEditRect().height += (offset * getEditRect().height / getEditRect().width);
+                  getEditRect().width += offset;
+                }
                 break;
               }
               case TOP_LEFT:
               {
-                double offset = Math.abs(diff.x) > Math.abs(diff.y) ? diff.x : diff.y;
-                getEditRect().y += (offset * getEditRect().height / getEditRect().width);
-                getEditRect().height -= (offset * getEditRect().height / getEditRect().width);
-                getEditRect().x += offset;
-                getEditRect().width -= offset;
+                if (!shiftKeyDown) // maintain aspect ratio if shift is down
+                {
+                  getEditRect().y += diff.y;
+                  getEditRect().height -= diff.y;
+                  getEditRect().x += diff.x;
+                  getEditRect().width -= diff.x;
+                } else {
+                  double offset = Math.abs(diff.x) > Math.abs(diff.y) ? diff.x : diff.y;
+                  getEditRect().y += (offset * getEditRect().height / getEditRect().width);
+                  getEditRect().height -= (offset * getEditRect().height / getEditRect().width);
+                  getEditRect().x += offset;
+                  getEditRect().width -= offset;
+                }
                 break;
               }
               case CENTER_RIGHT:
