@@ -28,6 +28,12 @@
   <defs
      id="defs4">
     <ref
+       param="TYPE"
+       label="Corners"
+       type="String(Sharp,Rounded)"
+       default="Sharp"
+       id="type" />
+    <ref
        param="X"
        label="X (mm)"
        default="10"
@@ -76,7 +82,16 @@
        id="fill" />
   </defs>
     <rect
-	 	 th:attr="stroke=${COLOR},fill=${FILL},stroke-width=${SW},x=${X}*3.543307,y=${Y}*3.543307,width=${W}*3.543307,height=${H}*3.543307,rx=${RX}*3.543307,ry=${RY}*3.543307"
+       th:attr="stroke=${COLOR},fill=${FILL},stroke-width=${SW},x=${X}*3.543307,y=${Y}*3.543307,width=${W}*3.543307,height=${H}*3.543307,rx=${RX}*3.543307,ry=${RY}*3.543307"
+       th:if="${TYPE}=='Rounded'"
+       id="rect"
+       width="100"
+       height="100"
+       x="25"
+       y="25" />
+    <rect
+       th:attr="stroke=${COLOR},fill=${FILL},stroke-width=${SW},x=${X}*3.543307,y=${Y}*3.543307,width=${W}*3.543307,height=${H}*3.543307"
+       th:if="${TYPE}=='Sharp'"
        id="rect"
        width="100"
        height="100"
