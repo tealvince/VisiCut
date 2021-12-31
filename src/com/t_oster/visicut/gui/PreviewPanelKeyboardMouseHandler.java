@@ -165,10 +165,28 @@ public class PreviewPanelKeyboardMouseHandler extends EditRectangleController im
             {
               dialogHelper.showWarningMessage(warnings);
             }
-            GraphicSet gs = getSelectedSet();
-            gs.setTransform(Helper.getTransform(gs.getOriginalBoundingBox(), bb));
-            VisicutModel.getInstance().firePartUpdated(VisicutModel.getInstance().getSelectedPart());
-            VisicutModel.getInstance().removePlfPart(p);
+
+            PlfPart newPart = getSelectedPart();
+				if (newPart.getGraphicObjects().getBoundingBox().getWidth() == 0 ||
+				    newPart.getGraphicObjects().getBoundingBox().getHeight() == 0) {
+               VisicutModel.getInstance().removePlfPart(newPart);
+            } else {
+               GraphicSet gs = getSelectedSet();
+//             gs.setTransform(Helper.getTransform(gs.getOriginalBoundingBox(), bb));
+
+					// Scale down traced image by 1/2 to account for
+					// observed doubling in size of potrace output, and
+					// compensate for offset presumably due to flipped
+					// Y axis directions in bitmap vs svg (does not account for
+					// any whitespace on top.
+					AffineTransform transform = p.getGraphicObjects().getTransform();
+					transform.scale(0.5,0.5);
+					transform.translate(0.0, bb.getY() - gs.getOriginalBoundingBox().getY());
+               gs.setTransform(transform);
+
+               VisicutModel.getInstance().firePartUpdated(VisicutModel.getInstance().getSelectedPart());
+               VisicutModel.getInstance().removePlfPart(p);
+				}
           }
           catch (Exception ex)
           {
