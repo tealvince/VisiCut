@@ -511,18 +511,21 @@ public class PreviewPanel extends ZoomablePanel implements PropertyChangeListene
       gg.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
       gg.setRenderingHint(RenderingHints.KEY_RENDERING, RenderingHints.VALUE_RENDER_QUALITY);
       BufferedImage backgroundImage = VisicutModel.getInstance().getBackgroundImage();
+
       if (backgroundImage != null && showBackgroundImage && VisicutModel.getInstance().getSelectedLaserDevice() != null)
       {
         AffineTransform img2px = new AffineTransform(this.getMmToPxTransform());
-        if (VisicutModel.getInstance().getSelectedLaserDevice().getCameraCalibration() != null)
-        {
-          // if there is camera calibration, the image should correspond to the total size of the bed, so compute a pixel-to-mm scale.
-          // x and y should should be equal, but do them both anyway.
+		  // Assume camera has been calibrated to match the bed,
+		  // either in-app or externally
+//      if (VisicutModel.getInstance().getSelectedLaserDevice().getCameraCalibration() != null)
+//      {
+//        // if there is camera calibration, the image should correspond to the total size of the bed, so compute a pixel-to-mm scale.
+//        // x and y should should be equal, but do them both anyway.
           double xscale = bedWidth / (double)backgroundImage.getWidth();
           double yscale = bedHeight / (double)backgroundImage.getHeight();
           img2px.scale(xscale,yscale);
           gg.drawRenderedImage(backgroundImage, img2px);
-        }
+//      }
       }
       Rectangle box = Helper.toRect(Helper.transform(
           new Rectangle2D.Double(0, 0, this.bedWidth, this.bedHeight),
