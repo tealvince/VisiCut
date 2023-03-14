@@ -323,6 +323,31 @@ public class VisicutModel
     // event being fired, so send null as the old value to force an event.
     propertyChangeSupport.firePropertyChange(PROP_BACKGROUNDIMAGE, null, backgroundImage);
   }
+
+  protected boolean cameraActive = false;
+  public static final String PROP_CAMERA_ACTIVE = "camera_active";
+
+  /**
+   * Get the value of cameraActive
+   *
+   * @return the value of cameraActive
+   */
+  public boolean getCameraActive()
+  {
+    return cameraActive;
+  }
+
+  /**
+   * Set the value of cameraActive
+   *
+   * @param cameraActive new value of cameraActive
+   */
+  public void setCameraActive(boolean cameraActive)
+  {
+    this.cameraActive = cameraActive;
+    propertyChangeSupport.firePropertyChange(PROP_CAMERA_ACTIVE, null, cameraActive);
+  }
+
   protected Preferences preferences = new Preferences();
   public static final String PROP_PREFERENCES = "preferences";
 

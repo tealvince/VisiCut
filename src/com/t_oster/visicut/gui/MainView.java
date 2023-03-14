@@ -701,6 +701,7 @@ public class MainView extends javax.swing.JFrame
     cbMaterialThickness = new javax.swing.JComboBox();
     btAddMaterialThickness = new javax.swing.JButton();
     jCheckBox1 = new javax.swing.JCheckBox();
+    cameraCheckBox = new javax.swing.JCheckBox();
     executeJobButton = new javax.swing.JButton();
     objectComboBox = new javax.swing.JComboBox();
     jSeparator1 = new javax.swing.JSeparator();
@@ -1194,6 +1195,20 @@ public class MainView extends javax.swing.JFrame
     });
     jPanel1.add(btThingiverse);
     btThingiverse.getAccessibleContext().setAccessibleDescription(resourceMap.getString("btThingiverse.AccessibleContext.accessibleDescription")); // NOI18N
+
+    // Add camera checkbox
+    cameraCheckBox.setText(resourceMap.getString("cameraActiveMenuItem.text")); // NOI18N
+    cameraCheckBox.setToolTipText(resourceMap.getString("cameraActiveMenuItem.toolTipText")); // NOI18N
+    cameraCheckBox.setName("cameraCheckBox"); // NOI18N
+    jPanel1.add(cameraCheckBox);
+
+    cameraCheckBox.addItemListener(new java.awt.event.ItemListener()
+    {
+      @Override
+      public void itemStateChanged(java.awt.event.ItemEvent evt) {
+        cameraCheckboxItemStateChanged(evt);
+      }
+    });
 
     btQRWebcamScan.setIcon(com.frochr123.icons.IconLoader.loadIcon(com.frochr123.icons.IconLoader.ICON_QRCODE));
     btQRWebcamScan.setToolTipText(resourceMap.getString("btQRWebcamScan.toolTipText")); // NOI18N
@@ -1936,6 +1951,7 @@ public class MainView extends javax.swing.JFrame
 
       this.calibrateCameraMenuItem.setEnabled(cam);
       this.cameraActiveMenuItem.setEnabled(cam);
+      this.cameraCheckBox.setSelected(cam);
       previewPanel.setShowBackgroundImage(cam);
       setCameraActive(cam);
 
@@ -3585,6 +3601,13 @@ private void cameraActiveMenuItemActionPerformed(java.awt.event.ActionEvent evt)
   setCameraActive(cam);
 }//GEN-LAST:event_cameraActiveMenuItemActionPerformed
 
+private void cameraCheckboxItemStateChanged(java.awt.event.ItemEvent evt) {
+  boolean cam = (!getVisiCam().isEmpty()) && evt.getStateChange() == java.awt.event.ItemEvent.SELECTED;
+  previewPanel.setShowBackgroundImage(cam);
+  getDialog().removeMessageWithId("camera error");
+  setCameraActive(cam);
+}
+
 private void projectorActiveMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_projectorActiveMenuItemActionPerformed
   setProjectorActive(!isProjectorActive());
 }//GEN-LAST:event_projectorActiveMenuItemActionPerformed
@@ -3643,6 +3666,7 @@ private void projectorActiveMenuItemActionPerformed(java.awt.event.ActionEvent e
   private javax.swing.JButton jButton1;
   private javax.swing.JButton jButton2;
   private javax.swing.JCheckBox jCheckBox1;
+  private javax.swing.JCheckBox cameraCheckBox;
   private javax.swing.JLabel jLabel1;
   private javax.swing.JLabel jLabel10;
   private javax.swing.JLabel jLabel2;
@@ -3814,11 +3838,14 @@ private void projectorActiveMenuItemActionPerformed(java.awt.event.ActionEvent e
       }
 
       cameraActiveMenuItem.setSelected(true);
+      cameraCheckBox.setSelected(true);
     }
     else
     {
       cameraActiveMenuItem.setSelected(false);
+      cameraCheckBox.setSelected(false);
     }
+    visicutModel1.setCameraActive(cameraActive);
   }
 
   /**

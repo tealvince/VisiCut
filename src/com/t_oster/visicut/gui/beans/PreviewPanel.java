@@ -47,6 +47,8 @@ import java.awt.Rectangle;
 import java.awt.RenderingHints;
 import java.awt.Shape;
 import java.awt.Stroke;
+import java.awt.event.ComponentEvent;
+import java.awt.event.ComponentListener;
 import java.awt.geom.AffineTransform;
 import java.awt.geom.PathIterator;
 import java.awt.geom.Point2D;
@@ -76,6 +78,18 @@ public class PreviewPanel extends ZoomablePanel implements PropertyChangeListene
   public PreviewPanel()
   {
     VisicutModel.getInstance().addPropertyChangeListener(this);
+
+    // Add listener to repaint on resize
+    addComponentListener(new ComponentListener() {
+      public void componentResized(ComponentEvent ce)
+      {
+        repaint();
+      }
+      public void componentMoved(ComponentEvent ce){}
+      public void componentShown(ComponentEvent ce){}
+      public void componentHidden(ComponentEvent ce){}
+    });
+
     updateBedSize(VisicutModel.getInstance().getSelectedLaserDevice());
   }
 
@@ -517,15 +531,15 @@ public class PreviewPanel extends ZoomablePanel implements PropertyChangeListene
         AffineTransform img2px = new AffineTransform(this.getMmToPxTransform());
 		  // Assume camera has been calibrated to match the bed,
 		  // either in-app or externally
-//      if (VisicutModel.getInstance().getSelectedLaserDevice().getCameraCalibration() != null)
-//      {
-//        // if there is camera calibration, the image should correspond to the total size of the bed, so compute a pixel-to-mm scale.
-//        // x and y should should be equal, but do them both anyway.
+        if (VisicutModel.getInstance().getCameraActive())
+        {
+          // if there is an active camera, the image should correspond to the total size of the bed, so compute a pixel-to-mm scale.
+          // x and y should should be equal, but do them both anyway.
           double xscale = bedWidth / (double)backgroundImage.getWidth();
           double yscale = bedHeight / (double)backgroundImage.getHeight();
           img2px.scale(xscale,yscale);
           gg.drawRenderedImage(backgroundImage, img2px);
-//      }
+        }
       }
       Rectangle box = Helper.toRect(Helper.transform(
           new Rectangle2D.Double(0, 0, this.bedWidth, this.bedHeight),
